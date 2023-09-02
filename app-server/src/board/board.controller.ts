@@ -11,10 +11,16 @@ import {
 import Board from './board.model';
 import { BoardService } from './board.service';
 import { CreateUpdateBoardDto } from './board.dto';
+import { CreateTodoDto } from '../todo/types/todo.dto';
+import Todo from 'src/todo/todo.model';
+import { BoardUtility } from './board.utility';
 
 @Controller('board')
 export class BoardController {
-  constructor(private readonly boardService: BoardService) {}
+  constructor(
+    private readonly boardService: BoardService,
+    private readonly boardUtility: BoardUtility,
+  ) {}
 
   @Get()
   async findAll(): Promise<Board[]> {
@@ -42,5 +48,13 @@ export class BoardController {
   @Delete('/:id')
   async delete(@Param('id', ParseIntPipe) id: number): Promise<void> {
     return this.boardService.delete(id);
+  }
+
+  @Post('/:id/todo')
+  async createTodo(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() payload: CreateTodoDto,
+  ): Promise<Todo> {
+    return this.boardUtility.createTodoForBoard(id, payload);
   }
 }
