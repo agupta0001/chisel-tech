@@ -1,6 +1,7 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import Board from './board.model';
+import Todo from 'src/todo/todo.model';
 
 @Injectable()
 export class BoardService {
@@ -8,5 +9,52 @@ export class BoardService {
 
   async findAll(): Promise<Board[]> {
     return this.boardModel.findAll();
+  }
+
+  async findOne(id: number): Promise<Board> {
+    const board = await this.boardModel.findOne({
+      where: {
+        id,
+      },
+      include: [Todo],
+    });
+
+    if (!board) {
+      throw new NotFoundException('Board Not Found');
+    }
+
+    return board;
+  }
+
+  async create(payload: { title: string }): Promise<Board> {
+    return this.boardModel.create(payload);
+  }
+
+  async update(id: number, payload: { title: string }): Promise<Board> {
+    const board = await this.boardModel.findOne({
+      where: {
+        id,
+      },
+    });
+
+    if (!board) {
+      throw new NotFoundException('Board Not Found');
+    }
+
+    return board.update(payload);
+  }
+
+  async delete(id: number): Promise<void> {
+    const board = await this.boardModel.findOne({
+      where: {
+        id,
+      },
+    });
+
+    if (!board) {
+      throw new NotFoundException('Board Not Found');
+    }
+
+    await board.destroy();
   }
 }
