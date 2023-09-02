@@ -8,7 +8,9 @@ import {
   Table,
   UpdatedAt,
   Model,
+  HasMany,
 } from 'sequelize-typescript';
+import Todo from 'src/todo/todo.model';
 
 @Table({
   tableName: 'boards',
@@ -33,4 +35,7 @@ export default class Board extends Model {
   @Column
   @DeletedAt
   deleted_at: Date;
+
+  @HasMany(() => Todo)
+  todos: Todo[];
 }

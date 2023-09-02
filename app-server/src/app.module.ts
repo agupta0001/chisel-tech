@@ -3,6 +3,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { BoardModule } from './board/board.module';
+import { TodoModule } from './todo/todo.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { BoardModule } from './board/board.module';
       logging: console.log,
     }),
     BoardModule,
+    TodoModule,
   ],
   controllers: [AppController],
   providers: [AppService],
