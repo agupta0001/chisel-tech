@@ -1,4 +1,5 @@
 import "semantic-ui-css/semantic.min.css";
+import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import { ReactElement, ReactNode } from "react";
 import { NextPage } from "next";

@@ -1,6 +1,7 @@
 import { Board } from "@/types/board";
 import { FC, useMemo } from "react";
 import { Tab } from "semantic-ui-react";
+import BoardContainer from "./BoardContainer";
 
 interface BoardTabsProps {
   boards: Board[];
@@ -11,7 +12,11 @@ const BoardTabs: FC<BoardTabsProps> = ({ boards }) => {
     () =>
       boards.map((board) => ({
         menuItem: board.title,
-        render: () => <Tab.Pane>{board.title}</Tab.Pane>,
+        render: () => (
+          <Tab.Pane>
+            <BoardContainer board={board} />
+          </Tab.Pane>
+        ),
       })),
     [boards]
   );
