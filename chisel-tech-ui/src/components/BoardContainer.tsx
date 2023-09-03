@@ -51,9 +51,17 @@ const BoardContainer: FC<BoardContainerProps> = ({ board }) => {
 
   return (
     <div className="ui grid full-width">
-      <TodoContainer todos={openTodos} title="New Tasks" />
+      <TodoContainer
+        todos={openTodos}
+        title="New Tasks"
+        onTodoUpdate={boardQuery.refetch}
+      />
       <CreateTodo board={board} onSuccess={boardQuery.refetch} />
-      <TodoContainer todos={completedTodos} title="Completed Tasks" />
+      <TodoContainer
+        todos={completedTodos}
+        title="Completed Tasks"
+        onTodoUpdate={boardQuery.refetch}
+      />
     </div>
   );
 };

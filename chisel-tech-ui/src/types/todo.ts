@@ -17,3 +17,8 @@ export type CreateTodoPayload = {
   title: string;
   status?: TodoStatus;
 };
+
+export type UpdateTodoPayload = {
+  title?: string;
+  status?: TodoStatus;
+};
