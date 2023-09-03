@@ -2,7 +2,7 @@ import { FETCH_BOARD_DETAILS } from "@/lib/queryKeys";
 import { fetchBoard } from "@/services/board";
 import { Todo, TodoStatus } from "@/types/todo";
 import { useQuery } from "@tanstack/react-query";
-import { FC, useMemo } from "react";
+import { FC, useMemo, useState } from "react";
 import { Button, Icon, Message, Segment } from "semantic-ui-react";
 import TodoContainer from "./TodoContainer";
 import CreateTodo from "./CreateTodo";
@@ -13,6 +13,7 @@ interface BoardContainerProps {
 }
 
 const BoardContainer: FC<BoardContainerProps> = ({ board }) => {
+  const [editTodo, setEditTodo] = useState<Todo | null>(null);
   const boardQuery = useQuery([FETCH_BOARD_DETAILS, board.id], () =>
     fetchBoard(board.id)
   );

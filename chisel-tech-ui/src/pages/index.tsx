@@ -3,8 +3,8 @@ import RootLayout from "@/components/RootLayout";
 import { FETCH_ALL_BOARDS } from "@/lib/queryKeys";
 import { fetchBoards } from "@/services/board";
 import { useQuery } from "@tanstack/react-query";
-import { ReactElement, useMemo } from "react";
-import { Button, Icon, Image, Message, Segment, Tab } from "semantic-ui-react";
+import { ReactElement } from "react";
+import { Button, Icon, Message, Segment } from "semantic-ui-react";
 
 const Home = () => {
   const allBoardsQuery = useQuery([FETCH_ALL_BOARDS], fetchBoards);
@@ -28,7 +28,12 @@ const Home = () => {
     );
   }
 
-  return <BoardTabs boards={allBoardsQuery.data} />;
+  return (
+    <BoardTabs
+      boards={allBoardsQuery.data}
+      refetchBoards={allBoardsQuery.refetch}
+    />
+  );
 };
 
 Home.getLayout = function getLayout(page: ReactElement) {

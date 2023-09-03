@@ -17,7 +17,7 @@ const TodoContainer: FC<TodoContainerProps> = ({
     <div className="four wide column">
       <h3 className="text-xl font-bold mb-2">{title}</h3>
       {todos.map((todo) => (
-        <TodoItem todo={todo} onTodoUpdate={onTodoUpdate} />
+        <TodoItem key={todo.id} todo={todo} onTodoUpdate={onTodoUpdate} />
       ))}
     </div>
   );
