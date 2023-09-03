@@ -43,18 +43,4 @@ export class BoardService {
 
     return board.update(payload);
   }
-
-  async delete(id: number): Promise<void> {
-    const board = await this.boardModel.findOne({
-      where: {
-        id,
-      },
-    });
-
-    if (!board) {
-      throw new NotFoundException('Board Not Found');
-    }
-
-    await board.destroy();
-  }
 }

@@ -47,7 +47,7 @@ export class BoardController {
 
   @Delete('/:id')
   async delete(@Param('id', ParseIntPipe) id: number): Promise<void> {
-    return this.boardService.delete(id);
+    return this.boardUtility.deleteBoard(id);
   }
 
   @Post('/:id/todo')

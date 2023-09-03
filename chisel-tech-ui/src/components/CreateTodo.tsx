@@ -45,7 +45,6 @@ const CreateTodo: FC<CreateTodoProps> = ({ board, onSuccess, editTodo }) => {
       updateTodoMutation.mutate({
         id: editTodo.id,
         title,
-        status: editTodo.status,
       });
     } else {
       createTodoMutation.mutate();
