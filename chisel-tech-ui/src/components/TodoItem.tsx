@@ -7,9 +7,10 @@ import { Button, Checkbox, Icon } from "semantic-ui-react";
 interface TodoItemProps {
   todo: Todo;
   onTodoUpdate: () => void;
+  onTodoEdit: (todo: Todo) => void;
 }
 
-const TodoItem: FC<TodoItemProps> = ({ todo, onTodoUpdate }) => {
+const TodoItem: FC<TodoItemProps> = ({ todo, onTodoUpdate, onTodoEdit }) => {
   const updateTodoMutation = useMutation(updateTodo);
   const deleteTodoMutation = useMutation(deleteTodo);
 
@@ -50,6 +51,10 @@ const TodoItem: FC<TodoItemProps> = ({ todo, onTodoUpdate }) => {
           className="mr-4"
           onChange={handleTodoUpdate}
         />
+
+        <Button icon onClick={() => onTodoEdit(todo)}>
+          <Icon name="edit" />
+        </Button>
 
         <Button icon onClick={handleDelete}>
           <Icon name="trash" />

@@ -1,16 +1,20 @@
 import { createTodo } from "@/services/board";
+import { updateTodo } from "@/services/todo";
 import { Board } from "@/types/board";
+import { Todo } from "@/types/todo";
 import { useMutation } from "@tanstack/react-query";
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { Button, Input } from "semantic-ui-react";
 
 interface CreateTodoProps {
   board: Board;
   onSuccess: () => void;
+  editTodo?: Todo | null;
 }
 
-const CreateTodo: FC<CreateTodoProps> = ({ board, onSuccess }) => {
-  const [title, setTitle] = useState("");
+const CreateTodo: FC<CreateTodoProps> = ({ board, onSuccess, editTodo }) => {
+  const [title, setTitle] = useState(editTodo?.title || "");
+
   const createTodoMutation = useMutation(
     () => createTodo(board.id, { title }),
     {
@@ -21,12 +25,31 @@ const CreateTodo: FC<CreateTodoProps> = ({ board, onSuccess }) => {
     }
   );
 
+  const updateTodoMutation = useMutation(updateTodo, {
+    onSuccess: () => {
+      setTitle("");
+      onSuccess();
+    },
+  });
+
+  useEffect(() => {
+    if (editTodo) setTitle(editTodo.title);
+  }, [editTodo]);
+
   const handleTodoSave = () => {
     if (!title || title.length < 3) {
       alert("Task should be atleast 3 characters long");
     }
 
-    createTodoMutation.mutate();
+    if (editTodo) {
+      updateTodoMutation.mutate({
+        id: editTodo.id,
+        title,
+        status: editTodo.status,
+      });
+    } else {
+      createTodoMutation.mutate();
+    }
   };
 
   return (
@@ -44,7 +67,7 @@ const CreateTodo: FC<CreateTodoProps> = ({ board, onSuccess }) => {
           onClick={handleTodoSave}
           disabled={!title}
         >
-          Create Todo
+          {Boolean(editTodo) ? "Update" : "Create"} Todo
         </Button>
       </div>
     </div>

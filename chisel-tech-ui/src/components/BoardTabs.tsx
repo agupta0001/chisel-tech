@@ -57,7 +57,7 @@ const BoardTabs: FC<BoardTabsProps> = ({ boards, refetchBoards }) => {
       })),
       {
         menuItem: (
-          <Menu.Item>
+          <Menu.Item key="add-board">
             <Icon name="plus" />
           </Menu.Item>
         ),

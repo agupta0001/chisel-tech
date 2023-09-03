@@ -50,18 +50,31 @@ const BoardContainer: FC<BoardContainerProps> = ({ board }) => {
     );
   }
 
+  const handleTodoEdit = (todo: Todo) => {
+    setEditTodo(todo);
+  };
+
   return (
     <div className="ui grid full-width">
       <TodoContainer
         todos={openTodos}
         title="New Tasks"
         onTodoUpdate={boardQuery.refetch}
+        onTodoEdit={handleTodoEdit}
       />
-      <CreateTodo board={board} onSuccess={boardQuery.refetch} />
+      <CreateTodo
+        board={board}
+        onSuccess={() => {
+          boardQuery.refetch();
+          setEditTodo(null);
+        }}
+        editTodo={editTodo}
+      />
       <TodoContainer
         todos={completedTodos}
         title="Completed Tasks"
         onTodoUpdate={boardQuery.refetch}
+        onTodoEdit={handleTodoEdit}
       />
     </div>
   );
